@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-   
-    <title> Jay Zooted </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jay Zooted</title>
     <style>
         #all-contents {
             max-width: 800px;
             margin: auto;
-            
+
         }
 
         body {
@@ -75,6 +77,32 @@
         .content {
             flex: 1;
             padding: 15px;
+
+        }
+
+        .content h1 {
+            color: black;
+        }
+
+        #portfolio {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #portfolio li {
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #portfolio li:hover {
+            background: #eee;
+        }
+
+        #portfolio a {
+            text-decoration: none;
+            color: #454545;
         }
 
         #interests {
@@ -87,15 +115,12 @@
             margin: 0px;
         }
     </style>
-
 </head>
-
 
 <body>
     <div id="all-contents">
-
         <nav>
-        
+
             <h1>Jay's Makerspace</h1>
             <ul id="nav-ul">
                 <li class="nav-li">
@@ -107,35 +132,23 @@
             </ul>
 
         </nav>
-
         <main>
-            <!--sidebar section-->
-            <div class="sidebar">
-                <img class="sidebar-img"
-                    src="https://i.shgcdn.com/1d0a30f4-620e-4ce1-b328-cb2278855e40/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
-                    alt="How To Get 4 Million Dollars In GTA 5 Online" />
-            </div>
-
-            <!--content section-->
             <div class="content">
-                <h2>jalal</h2>
-                <p>ambitous entrepreneur</p>
-                <!--interests section-->
-                <div id="interests">
-                    <h3>interests</h3>
-                    <ol>
-                        <li>nickname is jay</li>
-                        <li>
-                            jay like's money
-                        </li>
-                        <li>jay also like's money</li>
-                    </ol>
-                </div>
+                <h1>portfolio</h1>
+                <ul id="portfolio">
+                    <li><a href="projects/platformer/">Platformer : A cannon - dodging, collectible - grabbing adventure
+                            game for Halleb0t</a></li>
+                    <li><a href="projects/bouncing-box/">Bouncing Box : A project that gives you a taste of game
+                            development on the web </a></li>
+                    <li><a href="projects/circularity/">Circularity : A motion poem using random number generation and
+                            velocity applied to circle shapes...</a></li>
+                </ul>
+
 
             </div>
-
         </main>
     </div>
+
 </body>
 
 </html>
