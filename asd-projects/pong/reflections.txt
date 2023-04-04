@@ -1,0 +1,10 @@
+the gameplay of pong will be two players trying to block the ball from going into the other side.
+both players points must be at zero.
+yes the game has an end, when a players points reach 11.
+if a players points reach 11 than the game will end
+static= board.
+animated = players, ball.
+both players points, the positionY of both players, speed and position of the ball
+a timer event could be when the game ends a 3 second timer starts to restart the game,keyboard events could be W,S,^, down arrow, click event could be when they press the start button
+the timer event can reset and add to the original timer, the keyboard events affect the movement of the players, clicking event can act as the start of the game.
+at the beggining of the game the time event is going to reset after each point is scored, the keyboard event will be based on which key is pressed for example if the down arrow key or s key is pressed than player 1 or player 2 will move downwards, if the w key or up arrow key is pressed than the player 1 or player 2 will move upwards, the only click event will be the start button. 
