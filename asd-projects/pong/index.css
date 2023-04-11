@@ -11,11 +11,50 @@ body {
   position: relative;
 }
 
-#gameItem {
-  background-color: teal;
-  width: 50px;
-  height: 50px;
+#playerOne {
+  background-color: white;
+  width: 20px;
+  border-radius: 50px;
+  height: 125px;
   position: absolute;
-/*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
-/*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+  right: 10px;  /* Uncomment if you want to set a "starting" position */
+  top: 145px;    /* Uncomment if you want to set a "starting" position */
+}
+
+#playerTwo {
+  background-color:white;
+  width: 20px;
+  border-radius: 50px;
+  height: 125px;
+  position: absolute;
+  left: 10px;
+  top: 145px;
+}
+
+#ball {
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+  position: absolute;
+  top: 205px;
+  left:205px;
+
+}
+
+#scoreOne {
+  height: 55px;
+  width: 55px;
+  background-color:white;
+  position: absolute;
+  left: 100px;
+}
+
+#scoreTwo {
+  height: 55px;
+  width: 55px;
+  background-color: white;
+  position:absolute;
+  right:100px;
+  bottom: 385px;
 }
