@@ -11,34 +11,32 @@ body {
   position: relative;
 }
 
-#playerOne {
+#rightPaddle {
   background-color: white;
   width: 20px;
   border-radius: 50px;
-  height: 125px;
+  height: 80px;
   position: absolute;
-  right: 10px;  /* Uncomment if you want to set a "starting" position */
-  top: 145px;    /* Uncomment if you want to set a "starting" position */
+  left: 410px;  /* Uncomment if you want to set a "starting" position */
+  top: 205px;    /* Uncomment if you want to set a "starting" position */
 }
 
-#playerTwo {
+#leftPaddle {
   background-color:white;
   width: 20px;
   border-radius: 50px;
-  height: 125px;
+  height: 80px;
   position: absolute;
   left: 10px;
-  top: 145px;
+  top: 205px;
 }
 
 #ball {
   background-color: white;
-  height: 30px;
-  width: 30px;
-  border-radius: 50px;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
   position: absolute;
-  top: 205px;
-  left:205px;
 
 }
 

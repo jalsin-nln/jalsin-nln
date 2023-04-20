@@ -101,22 +101,26 @@ function runProgram(){
     // turn off event handlers
     $(document).off();
   }
+
  function repositionGameItem(){
-   positionX += speedX;
    positionY += speedY;
+   positionX += speedX;
   }
+
  function repositionPlayerTwo(){
-  secondPositionX += secondSpeedX;
   secondPositionY += secondSpeedY;
+  secondPositionX += secondSpeedX;
  }
+
   function redrawGameItem(){
     $("#walker").css("top", positionY);
     $("#walker").css("left", positionX);
   
   }
+
   function redrawPlayerTwo(){
-    $("#playerTwo").css("top",secondPositionY);
-    $("#playerTwo").css("left",secondPositionX);
+    $("#playerTwo").css("top", secondPositionY);
+    $("#playerTwo").css("left", secondPositionX);
   }
   function handleKeyUp(){
     speedX =0;

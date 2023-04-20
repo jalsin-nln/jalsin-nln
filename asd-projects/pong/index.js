@@ -1,72 +1,87 @@
 /* global $, sessionStorage */
 
 $(document).ready(runProgram); // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
-  
-function runProgram(){
+
+function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
   //////////////////////////// SETUP /////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  // Constant Variables
+  // Constant Variables7
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
-  const UP_ARROW_KEY = 38;
-  const DOWN_ARROW_KEY = 40;
-  const W_KEY = 87;
-  const S_KEY = 83;
+  const BOARD_WIDTH = $("#board").width() - $("#ball").width();
+  const BOARD_HEIGHT = $("#board").height() - $("#ball").height();
+  const LEFT_SIDE = 0;
+  const TOP_SIDE = 0;
+  const SCORE_ONE = 1;
+  const SCORE_TWO = 1;
+  let KEY = {
+    'UP': 38,
+    'DOWN': 40,
+    'W': 87,
+    'S': 83
+  }
+
   // Game Item Objects
   function GamePiece(id) {
-    var GamePieceInstance = {}
-    GamePieceInstance.id = id;
-    GamePieceInstance.x = $(id).css("left");
-    GamePieceInstance.y = $(id).css("top");
-    GamePieceInstance.width = $(id).width();
-    GamePieceInstance.height = $(id).height();
-    GamePieceInstance.speedX = 0;
-    GamePieceInstance.speedY = 0;
-    return GamePieceInstance;
+    let GameItem = {};
+    GameItem.x = parseFloat($(id).css("left"));
+    GameItem.y = parseFloat($(id).css("top"));
+    GameItem.width = $(id).width();
+    GameItem.height = $(id).height();
+    GameItem.speedX = 0;
+    GameItem.speedY = 0;
+    GameItem.id = id;
+    return GameItem;
   }
 
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
-  $(document).on('eventType', handleEvent);                           // change 'eventType' to the type of event you want to handle
-  var positionX =0;
-  var positionY =0;
-  var speedX = 0;
-  var speedY = 0;
-  var secondSpeedX = 0;
-  var secondSpeedY = 0;
-  var secondPositionX = $("#playerTwo").css("left");
-  var secondPositionY = $("#playerTwo").css("top");
+  $(document).on('keydown', handleDownKeyEvent);                           // change 'eventType' to the type of event you want to handle
+  $(document).on('keyup', handleUpKeyEvent);
+  let rightPaddle = GamePiece("#rightPaddle");
+  let leftPaddle = GamePiece("#leftPaddle");
+  let ball = GamePiece("#ball");
+  
+  startBall();
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
-
   /* 
   On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
   by calling this function and executing the code inside.
   */
   function newFrame() {
-    
-
+    moveObject(leftPaddle);
+    moveObject(rightPaddle);
+    moveObject(ball);
+    wallCollision(ball);
+    wallCollision(leftPaddle);
+    wallCollision(rightPaddle);
   }
-  
-  /* 
+
+  /*
   Called in response to events.
   */
-  function handleEvent(event) {
-    if (event.which === W_KEY) {
-      speedY = 5;
+  function handleDownKeyEvent(event) {
+    if (event.which === KEY.W) {
+      leftPaddle.speedY = -5;
     }
-    if (event.which === S_KEY) {
-      speedY = -5;
+    else if (event.which === KEY.S) {
+      leftPaddle.speedY = 5;
     }
-    if (event.which === UP_ARROW_KEY) {
-      secondSpeedY = 5;
+    else if (event.which === KEY.UP) {
+      rightPaddle.speedY = -5;
     }
-    if (event.which === DOWN_ARROW_KEY) {
-      secondSpeedY = -5;
+    else if (event.which === KEY.DOWN) {
+      rightPaddle.speedY = 5;
     }
+  }
+
+  function handleUpKeyEvent() {
+    leftPaddle.speedY = LEFT_SIDE;
+    rightPaddle.speedY = TOP_SIDE;
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +89,38 @@ function runProgram(){
   ////////////////////////////////////////////////////////////////////////////////
 
   
+
+  function wallCollision(obj) {
+    if (obj.x >= BOARD_WIDTH) {
+      startBall();
+      $("#scoreOne").text(updatedScore);
+    }
+    if (obj.x <= LEFT_SIDE) {
+      startBall();
+    }
+    if (obj.y <= BOARD_HEIGHT) {
+      obj.speedY = -obj.speedY;
+    }
+    if (obj.y >= TOP_SIDE) {
+      obj.speedY = -obj.speedY;
+    }
+
+  }
+
+  function moveObject(obj) {
+    obj.x += obj.speedX;
+    obj.y += obj.speedY;
+    $(obj.id).css("left", obj.x);
+    $(obj.id).css("top", obj.y);
+  }
+
+  function startBall() {
+    ball.x = $("#board").width() / 2;
+    ball.y = $("#board").height() / 2;
+    ball.speedX = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+    ball.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
+  }
+
   function endGame() {
     // stop the interval timer
     clearInterval(interval);
@@ -81,5 +128,5 @@ function runProgram(){
     // turn off event handlers
     $(document).off();
   }
-  
+
 }
