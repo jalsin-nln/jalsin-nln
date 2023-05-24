@@ -7,15 +7,15 @@ function runProgram() {
   //////////////////////////// SETUP /////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  // Constant Variables7
+  // Constant Varia bles7
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   const BOARD_WIDTH = $("#board").width() - $("#ball").width();
   const BOARD_HEIGHT = $("#board").height() - $("#ball").height();
   const LEFT_SIDE = 0;
   const TOP_SIDE = 0;
-  const SCORE_ONE = 1;
-  const SCORE_TWO = 1;
+  let updatedScoreOne = 1;
+  let updatedScoreTwo = 1;
   let KEY = {
     'UP': 38,
     'DOWN': 40,
@@ -43,7 +43,7 @@ function runProgram() {
   let rightPaddle = GamePiece("#rightPaddle");
   let leftPaddle = GamePiece("#leftPaddle");
   let ball = GamePiece("#ball");
-  
+
   startBall();
   ////////////////////////////////////////////////////////////////////////////////
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
@@ -59,6 +59,8 @@ function runProgram() {
     wallCollision(ball);
     wallCollision(leftPaddle);
     wallCollision(rightPaddle);
+    bounceBall(ball, leftPaddle);
+    bounceBall(ball, rightPaddle);
   }
 
   /*
@@ -88,14 +90,43 @@ function runProgram() {
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
+  function doCollide(obj1, obj2) {
+    obj1.left = obj1.x;
+    obj1.top = obj1.y;
+    obj1.right = obj1.x + obj1.width;
+    obj1.bottom = obj1.y + obj1.height;
+    obj2.left = obj2.x;
+    obj2.top = obj2.y;
+    obj2.right = obj2.x + obj2.width;
+    obj2.bottom = obj2.y + obj2.height;
+
+    if (obj1.left < obj2.right &&
+      obj1.right > obj2.left &&
+      obj1.top < obj2.bottom &&
+      obj1.bottom > obj2.top) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   
+  function bounceBall(obj1, obj2) {
+    if (doCollide(obj1, obj2)) {
+      if(obj1.x < 0) {
+        obj1.speedX = +obj1.speedX;
+      }
+    
+  }
+   
+}
 
   function wallCollision(obj) {
     if (obj.x >= BOARD_WIDTH) {
+      $("#scoreOne").text(updatedScoreOne++);
       startBall();
-      $("#scoreOne").text(updatedScore);
     }
     if (obj.x <= LEFT_SIDE) {
+      $("#scoreTwo").text(updatedScoreTwo++);
       startBall();
     }
     if (obj.y <= BOARD_HEIGHT) {
