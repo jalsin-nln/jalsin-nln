@@ -46,6 +46,8 @@ body {
   background-color:white;
   position: absolute;
   left: 100px;
+  top: 20px;
+  text-align: center;w
 }
 
 #scoreTwo {
@@ -54,5 +56,12 @@ body {
   background-color: white;
   position:absolute;
   right:100px;
-  bottom: 385px;
+  bottom: 365px;
+  text-align: center;
+}
+
+#winner {
+  background-color: white;
+  text-align: center;
+  top: 205px;
 }

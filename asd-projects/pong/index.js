@@ -14,8 +14,8 @@ function runProgram() {
   const BOARD_HEIGHT = $("#board").height() - $("#ball").height();
   const LEFT_SIDE = 0;
   const TOP_SIDE = 0;
-  let updatedScoreOne = 1;
-  let updatedScoreTwo = 1;
+  let playerOneScore = 0;
+  let playerTwoScore = 0;
   let KEY = {
     'UP': 38,
     'DOWN': 40,
@@ -61,6 +61,7 @@ function runProgram() {
     wallCollision(rightPaddle);
     bounceBall(ball, leftPaddle);
     bounceBall(ball, rightPaddle);
+    checkForWinner();
   }
 
   /*
@@ -68,16 +69,16 @@ function runProgram() {
   */
   function handleDownKeyEvent(event) {
     if (event.which === KEY.W) {
-      leftPaddle.speedY = -5;
+      leftPaddle.speedY = -7;
     }
     else if (event.which === KEY.S) {
-      leftPaddle.speedY = 5;
+      leftPaddle.speedY = 7;
     }
     else if (event.which === KEY.UP) {
-      rightPaddle.speedY = -5;
+      rightPaddle.speedY = -7;
     }
     else if (event.which === KEY.DOWN) {
-      rightPaddle.speedY = 5;
+      rightPaddle.speedY = 7;
     }
   }
 
@@ -91,42 +92,40 @@ function runProgram() {
   ////////////////////////////////////////////////////////////////////////////////
 
   function doCollide(obj1, obj2) {
-    obj1.left = obj1.x;
-    obj1.top = obj1.y;
-    obj1.right = obj1.x + obj1.width;
-    obj1.bottom = obj1.y + obj1.height;
-    obj2.left = obj2.x;
-    obj2.top = obj2.y;
-    obj2.right = obj2.x + obj2.width;
-    obj2.bottom = obj2.y + obj2.height;
+    obj1.leftX = obj1.x;
+    obj1.topY = obj1.y;
+    obj1.rightX = obj1.x + obj1.width;
+    obj1.bottomY = obj1.y + obj1.height;
+    obj2.leftX = obj2.x;
+    obj2.topY = obj2.y;
+    obj2.rightX = obj2.x + obj2.width;
+    obj2.bottomY = obj2.y + obj2.height;
 
-    if (obj1.left < obj2.right &&
-      obj1.right > obj2.left &&
-      obj1.top < obj2.bottom &&
-      obj1.bottom > obj2.top) {
+    if (obj1.leftX < obj2.rightX &&
+      obj1.rightX > obj2.leftX &&
+      obj1.topY < obj2.bottomY &&
+      obj1.bottomY > obj2.topY) {
       return true;
-    } else {
+    } else {  
       return false;
     }
   }
-  
+
   function bounceBall(obj1, obj2) {
-    if (doCollide(obj1, obj2)) {
-      if(obj1.x < 0) {
-        obj1.speedX = +obj1.speedX;
-      }
-    
+    if (doCollide(obj1, obj2)) {  
+        obj1.speedX *= -1;
+    }
   }
-   
-}
 
   function wallCollision(obj) {
     if (obj.x >= BOARD_WIDTH) {
-      $("#scoreOne").text(updatedScoreOne++);
+      playerOneScore++;
+      $("#scoreOne").text(playerOneScore);
       startBall();
     }
     if (obj.x <= LEFT_SIDE) {
-      $("#scoreTwo").text(updatedScoreTwo++);
+      playerTwoScore++;
+      $("#scoreTwo").text(playerTwoScore);
       startBall();
     }
     if (obj.y <= BOARD_HEIGHT) {
@@ -152,12 +151,25 @@ function runProgram() {
     ball.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
   }
 
+  function checkForWinner() {
+    if (playerOneScore === 11) {
+      $("#winner").text("PLAYER ONE HAS WON THE GAME!");
+      endGame();
+    }
+    if (playerTwoScore === 11) {
+      $("#winner").text("PLAYER TWO HAS WON THE GAME!");
+      endGame();
+    }
+  }
   function endGame() {
-    // stop the interval timer
+          // stop the interval timer
     clearInterval(interval);
 
     // turn off event handlers
     $(document).off();
+   
+   
+   
   }
 
 }
