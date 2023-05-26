@@ -81,7 +81,7 @@ function runProgram() {
       rightPaddle.speedY = 7;
     }
   }
-
+  /*resets the paddle speed on keyup event*/
   function handleUpKeyEvent() {
     leftPaddle.speedY = LEFT_SIDE;
     rightPaddle.speedY = TOP_SIDE;
@@ -91,6 +91,8 @@ function runProgram() {
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
+  
+  /* checks for collisions between the ball and paddles*/
   function doCollide(obj1, obj2) {
     obj1.leftX = obj1.x;
     obj1.topY = obj1.y;
@@ -110,13 +112,13 @@ function runProgram() {
       return false;
     }
   }
-
+  /* bounces the ball off of the paddles*/
   function bounceBall(obj1, obj2) {
     if (doCollide(obj1, obj2)) {  
         obj1.speedX *= -1;
     }
   }
-
+  /* checks for collisions between the ball,left,and right paddles on all four sides of the board*/
   function wallCollision(obj) {
     if (obj.x >= BOARD_WIDTH) {
       playerOneScore++;
@@ -128,29 +130,29 @@ function runProgram() {
       $("#scoreTwo").text(playerTwoScore);
       startBall();
     }
-    if (obj.y <= BOARD_HEIGHT) {
-      obj.speedY = -obj.speedY;
+    if (obj.y + obj.height <= BOARD_HEIGHT) {
+      obj.speedY *= -1;
     }
     if (obj.y >= TOP_SIDE) {
-      obj.speedY = -obj.speedY;
+      obj.speedY *= -1;
     }
 
   }
-
+  /* changes the location and speed of the objects in the game and redraws them*/
   function moveObject(obj) {
     obj.x += obj.speedX;
     obj.y += obj.speedY;
     $(obj.id).css("left", obj.x);
     $(obj.id).css("top", obj.y);
   }
-
+  /*starts the ball at a certain position and sets the speed X, and Y at random*/
   function startBall() {
     ball.x = $("#board").width() / 2;
     ball.y = $("#board").height() / 2;
     ball.speedX = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
     ball.speedY = (Math.random() * 3 + 2) * (Math.random() > 0.5 ? -1 : 1);
   }
-
+  /*checks for which player has reached enough points to win the game*/
   function checkForWinner() {
     if (playerOneScore === 11) {
       $("#winner").text("PLAYER ONE HAS WON THE GAME!");
@@ -161,6 +163,7 @@ function runProgram() {
       endGame();
     }
   }
+  /* ends the game*/
   function endGame() {
           // stop the interval timer
     clearInterval(interval);
